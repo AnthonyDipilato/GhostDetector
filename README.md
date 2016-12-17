@@ -11,3 +11,7 @@ RH Electronics Geiger Counter Board
 Videos and pictures are saved to a USB flash drive
 
 Full build details can be found at [url]
+
+Raspberry Pi python code is in the Main directory Arduino EMF sensor code in the Arduino directory.
+
+
