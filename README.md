@@ -14,4 +14,10 @@ Full build details can be found at [url]
 
 Raspberry Pi python code is in the Main directory Arduino EMF sensor code in the Arduino directory.
 
+UI is built on Tkinter library 
 
+Required libraries:
+picamera
+Tkinter
+PyAudio
+MP4Box
