@@ -14,34 +14,16 @@ import wave
 # sensors class
 from sensors import Sensors 
 
-# initialize audio
-pa = pyaudio.PyAudio()
-# audio settings
-CHUNK = 8192
-FORMAT = pyaudio.paInt16
-CHANNELS = 1
-audio_frames = []
-# Settings
-# interval to check for sensor updates
-sensor_interval = 500 # milliseconds
-tog = [False]
-# used for final encoded output
-# location of the Flash Drive 
-mediaDirectory = '/media/pi/Media'
-# temp directory
-dirname, filename = os.path.split(os.path.abspath(__file__)) # find current directory
-tempDirectory = dirname + '/tmp'
-
-RATE = 44100
-# initialize tkinter
-root = tk.Tk()
-root.configure(bg="#000")
-
-# set window to full screen
-w, h = root.winfo_screenwidth(), root.winfo_screenheight()
-root.overrideredirect(1)
-root.geometry("%dx%d+0+0" % (w, h))
-root.focus_set() # <-- move focus to this widget
+# returns temp directory, creates it if needed
+def tempDir():
+    # temp directory
+    dirname, filename = os.path.split(os.path.abspath(__file__)) # find current directory
+    tempDirectory = dirname + '/tmp'
+    print("Temp directory: {}".format(tempDirectory))
+    # check if temp directory exists and create it if not 
+    if not os.path.exists(tempDirectory):
+        os.makedirs(d)
+    return tempDirectory
 
 def annotate():
     date_time = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -70,7 +52,8 @@ def encodeVideo():
     z = ['MP4Box', '-fps', '30', '-add', tempVideo, '-add', tempAudio,  outputFile]
     subprocess.Popen(z,shell=False)
 
-def deleteTemp():
+
+def deleteTempFiles(tempDirectory):
     for file in os.listdir(tempDirectory):
         file_path = os.path.join(tempDirectory, file)
         try:
@@ -117,6 +100,7 @@ def toggleRecord(tog=[False]):
         wf.writeframes(b''.join(audio_frames))
         wf.close()
         encodeVideo()
+        
 # quit application
 def quit():
     if tog[0]:
@@ -126,8 +110,37 @@ def quit():
     root.destroy()
 
 
+# initialize audio
+pa = pyaudio.PyAudio()
+# audio settings
+CHUNK = 8192
+FORMAT = pyaudio.paInt16
+CHANNELS = 1
+audio_frames = []
+# Settings
+# interval to check for sensor updates
+sensor_interval = 500 # milliseconds
+tog = [False]
+
+RATE = 44100
+# initialize tkinter
+root = tk.Tk()
+root.configure(bg="#000")
+
+# set window to full screen
+w, h = root.winfo_screenwidth(), root.winfo_screenheight()
+root.overrideredirect(1)
+root.geometry("%dx%d+0+0" % (w, h))
+root.focus_set() # <-- move focus to this widget
+
+
+# used for final encoded output
+# location of the Flash Drive 
+mediaDirectory = '/media/pi/Media'
+
+tempDirectory = tempDir()
 # Delete temp files
-deleteTemp()
+deleteTempFiles(tempDirectory)
 # widgets
 # preview area
 preview_height = h - 45
