@@ -44,7 +44,7 @@ def screenshot():
 def encodeVideo():
     tempVideo = tempDirectory + tempFilename + '.h264'
     tempAudio = tempDirectory + tempFilename + '.wav'
-    outputFile = mediaDirectory + tempFilename + '.mp4'
+    outputFile = mediaDirectory + '/Videos'+ tempFilename + '.mp4'
     print("Input: {} {}".format(tempAudio,tempVideo))
     print("Output: {}".format(outputFile))
     
@@ -72,8 +72,8 @@ def toggleRecord(tog=[False]):
     tog[0] = not tog[0]
     if tog[0]:
         # record video
-        recordButton.config(text="Stop Recording")
-        tempFilename = dt.datetime.now().strftime('/Videos/%Y-%m-%d-%H%M%S')
+        recordButton.config(text="Stop Recording") # update button label
+        tempFilename = dt.datetime.now().strftime('/%Y-%m-%d-%H%M%S')
         tempVideo = tempDirectory + tempFilename + '.h264'
         print("Temp: {}".format(tempVideo))
         camera.start_recording(tempVideo)
@@ -88,6 +88,7 @@ def toggleRecord(tog=[False]):
                     frames_per_buffer = CHUNK)
     else:
         audioFile = tempDirectory + tempFilename + '.wav'
+        print("audio file: {}".format(audioFile))
         recordButton.config(text="Record")
         camera.stop_recording()
         stream.stop_stream()  # Pause audio stream
