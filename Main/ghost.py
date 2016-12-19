@@ -28,8 +28,8 @@ tog = [False]
 # used for final encoded output
 # location of the Flash Drive 
 mediaDirectory = '/media/pi/Media'
-# temp director
-dirname, filename = os.path.split(os.path.abspath(__file__))
+# temp directory
+dirname, filename = os.path.split(os.path.abspath(__file__)) # find current directory
 tempDirectory = dirname + '/tmp'
 
 RATE = 44100
