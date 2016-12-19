@@ -133,7 +133,6 @@ root.overrideredirect(1)
 root.geometry("%dx%d+0+0" % (w, h))
 root.focus_set() # <-- move focus to this widget
 
-
 # used for final encoded output
 # location of the Flash Drive 
 mediaDirectory = '/media/pi/Media'
