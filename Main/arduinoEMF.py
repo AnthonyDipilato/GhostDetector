@@ -26,7 +26,11 @@ class EMF:
         time.sleep(0.25) # give arduino a moment to respond
         data = self.bus.read_i2c_block_data(self.address, 1)
         self.left = data[0] + self.left_offset
+        if self.left < 0:
+            self.left = 0
         self.right = data[1] + self.right_offset
+        if self.right < 0:
+            self.right = 0
         return self.left,self.right
 
 
