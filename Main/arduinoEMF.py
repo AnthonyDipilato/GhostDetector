@@ -11,6 +11,10 @@ class EMF:
     def __init__(self, port=1, address=0x04):
         self.bus = smbus.SMBus(port)
         self.address = address
+        self.left = 0
+        self.right = 0
+        self.left_offset = -170
+        self.right_offset = -130
     def update(self):
         try:
             self.bus.write_byte(self.address, 0)
@@ -21,6 +25,8 @@ class EMF:
         
         time.sleep(0.25) # give arduino a moment to respond
         data = self.bus.read_i2c_block_data(self.address, 1)
-        return data[0],data[1]
+        self.left = data[0] + self.left_offset
+        self.right = data[1] + self.right_offset
+        return self.left,self.right
 
 
