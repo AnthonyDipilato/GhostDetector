@@ -13,8 +13,10 @@ class EMF:
         self.address = address
         self.left = 0
         self.right = 0
-        self.left_offset = -170
+        # Calibration settings
+        self.left_offset = -173 # cooling fan is on left side causing additional noise
         self.right_offset = -130
+        self.multiplier = 1.5 # since ~170 of a max 255 is caused by fan interference we will use a multiplier to allow larger numbers
     def update(self):
         try:
             self.bus.write_byte(self.address, 0)
