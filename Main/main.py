@@ -162,7 +162,7 @@ camera = picamera.PiCamera()
 camera.vflip = True # camera is upside down
 camera.hflip = True 
 camera.start_preview(fullscreen=False, window = (offset_x, 0, preview_width, preview_height))# MENU
-camera.annotate_text_size = 24 # default 32
+camera.annotate_text_size = 20 # default 32
 try:
     #main loop
     # last check for sensor intervals
