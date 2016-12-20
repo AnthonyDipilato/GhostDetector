@@ -100,7 +100,7 @@ def toggleRecord(tog=[False]):
         recordButton.config(text="Record")
 # quit application
 def quit():
-    if status:
+    if top[0]:
         camera.stop_recording()
     camera.stop_preview()
     camera.close()
@@ -120,7 +120,7 @@ def record_loop():
 # interval to check for sensor updates
 sensor_interval = 500 # milliseconds
 record_interval = 1000
-tog = [False]
+tog = [0]
 
 # initialize tkinter
 root = tk.Tk()
