@@ -77,12 +77,12 @@ def toggleRecord(tog=[False]):
         tempVideo = tempDirectory + tempFilename + '.h264'
         print("Temp: {}".format(tempVideo))
         camera.start_recording(tempVideo)
+        audio_stream.start_stream()
     # stop recording
     else:
         status = False
         # stop audio
         audio_stream.stop_stream()
-        audio_stream.close()
         p.terminate()
         audioFile = tempDirectory + tempFilename + '.wav'
         print("audio file: {}".format(audioFile))
@@ -98,6 +98,7 @@ def toggleRecord(tog=[False]):
         encodeVideo()
         # update button
         recordButton.config(text="Record")
+        audio_frames = [] # clear frames
 
 # quit application
 def quit():
@@ -105,6 +106,7 @@ def quit():
         camera.stop_recording()
     camera.stop_preview()
     camera.close()
+    audio_stream.close()
     p.terminate()     
     GPIO.cleanup() # clean up GPIO on CTRL+C exit
     root.destroy()
@@ -114,6 +116,7 @@ def record_loop():
     # recording status, check for errors
     # tog = 0 recording
     if tog[0]:
+        print("chunk")
         camera.wait_recording()
         # store audio chunk
         data = audio_stream.read(CHUNK)
@@ -199,12 +202,14 @@ try:
 except KeyboardInterrupt:
     camera.stop_preview()
     camera.close()
+    audio_stream.close()
     p.terminate()     
     GPIO.cleanup() # clean up GPIO on CTRL+C exit
     root.destroy()
 except:
     camera.stop_preview()
     camera.close()
+    audio_stream.close()
     p.terminate()     
     GPIO.cleanup() # clean up GPIO on normal exit
     print "Unexpected error:", sys.exc_info()[0]
