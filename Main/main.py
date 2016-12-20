@@ -10,6 +10,7 @@ import subprocess
 import RPi.GPIO as GPIO
 import os
 import shutil
+import pyaudio
 import wave
 # sensors class
 from sensors import Sensors 
@@ -49,7 +50,7 @@ def encodeVideo():
     print("Output: {}".format(outputFile))
     
     # Combining/Merging of Audio/Video File into mkv
-    z = ['MP4Box', '-fps', '30', '-add', tempVideo, '-add', tempAudio,  outputFile]
+    z = ['MP4Box', '-fps', '30', '-add', tempVideo, outputFile]
     subprocess.Popen(z,shell=False)
 
 
@@ -67,41 +68,34 @@ def deleteTempFiles(tempDirectory):
 # toggle record video
 def toggleRecord(tog=[False]):
     global tempFilename
-    global stream #audio stream
-    global audio_frames
     tog[0] = not tog[0]
+    # recording
     if tog[0]:
-        # record video
         recordButton.config(text="Stop Recording") # update button label
         tempFilename = dt.datetime.now().strftime('/%Y-%m-%d-%H%M%S')
         tempVideo = tempDirectory + tempFilename + '.h264'
         print("Temp: {}".format(tempVideo))
         camera.start_recording(tempVideo)
-        # clear_audio frames
-        audio_frames = []
-        stream = pa.open(format=FORMAT,
-                    channels = CHANNELS,
-                    rate = RATE,
-                    input = True,
-                    output = False,
-                    input_device_index = 2,
-                    frames_per_buffer = CHUNK)
+    # stop recording
     else:
+        # stop audio
+        audio_stream.stop_stream()
+        audio_stream.close()
+        p.terminate()
         audioFile = tempDirectory + tempFilename + '.wav'
         print("audio file: {}".format(audioFile))
-        recordButton.config(text="Record")
-        camera.stop_recording()
-        stream.stop_stream()  # Pause audio stream
-        stream.close()  # Stop audio stream
-        # Creation of MIC WAVE FILE
-        wf = wave.open(audioFile, 'wb')                              
+        wf = wave.open(audioFile, 'wb')
         wf.setnchannels(CHANNELS)
-        wf.setsampwidth(pa.get_sample_size(FORMAT))
+        wf.setsampwidth(p.get_sample_size(FORMAT))
         wf.setframerate(RATE)
         wf.writeframes(b''.join(audio_frames))
         wf.close()
+        #stop camera recording
+        camera.stop_recording()
+        # encode and mux video
         encodeVideo()
-        
+        # update button
+        recordButton.config(text="Record")
 # quit application
 def quit():
     if tog[0]:
@@ -111,23 +105,15 @@ def quit():
     root.destroy()
 
 
-# initialize audio
-pa = pyaudio.PyAudio()
-# audio settings
-CHUNK = 8192
-FORMAT = pyaudio.paInt16
-CHANNELS = 1
-audio_frames = []
+
 # Settings
 # interval to check for sensor updates
 sensor_interval = 500 # milliseconds
 tog = [False]
 
-RATE = 44100
 # initialize tkinter
 root = tk.Tk()
 root.configure(bg="#000")
-
 # set window to full screen
 w, h = root.winfo_screenwidth(), root.winfo_screenheight()
 root.overrideredirect(1)
@@ -163,6 +149,21 @@ camera.vflip = True # camera is upside down
 camera.hflip = True 
 camera.start_preview(fullscreen=False, window = (offset_x, 0, preview_width, preview_height))# MENU
 camera.annotate_text_size = 20 # default 32
+
+# Audio settings
+CHUNK = 1024
+FORMAT = pyaudio.paInt16
+CHANNELS = 1
+RATE = 44100
+# initialize audio
+p = pyaudio.PyAudio()
+audio_stream = p.open(format=FORMAT,
+                channels=CHANNELS,
+                rate=RATE,
+                input=True,
+                frames_per_buffer=CHUNK)
+audio_frames = []
+
 try:
     #main loop
     # last check for sensor intervals
@@ -171,11 +172,11 @@ try:
         # annotate
         annotate()
         # recording status, check for errors
+        # tog = 0 recording
         if tog[0]:
             camera.wait_recording()
             # store audio chunk
-            data = stream.read(CHUNK)
-            print("Chunk")
+            data = audio_stream.read(CHUNK)
             audio_frames.append(data)
         # tkinter loop
         root.after(sensor_interval, sensors_update)
