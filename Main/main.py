@@ -68,6 +68,7 @@ def deleteTempFiles(tempDirectory):
 # toggle record video
 def toggleRecord(tog=[False]):
     global tempFilename
+    global audio_frames
     tog[0] = not tog[0]
     # recording
     if tog[0]:
@@ -113,6 +114,7 @@ def quit():
 
 
 def record_loop():
+    global audio_frames
     # recording status, check for errors
     # tog = 0 recording
     if tog[0]:
@@ -181,7 +183,7 @@ audio_stream = p.open(format=FORMAT,
                 input=True,
                 frames_per_buffer=CHUNK)
 audio_frames = []
-
+tog[0] = False
 
 try:
     #main loop
