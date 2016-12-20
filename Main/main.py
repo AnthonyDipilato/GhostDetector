@@ -191,7 +191,7 @@ try:
         # tkinter loop
         # tikinter handles loops a little different we will call functions on an interval
         # that calls themselves again on the interval
-        #root.after(record_interval, record_loop)
+        root.after(record_interval, record_loop)
         root.after(sensor_interval, sensors_update)
         root.after(sensor_interval, annotate) # update every second for clock
         root.mainloop()
