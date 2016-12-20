@@ -98,17 +98,17 @@ def toggleRecord(tog=[False]):
         encodeVideo()
         # update button
         recordButton.config(text="Record")
+
 # quit application
 def quit():
-    global root
-    print("quit")
-    if top[0]:
+    if tog[0]:
         camera.stop_recording()
     camera.stop_preview()
     camera.close()
     pa.terminate()     
     GPIO.cleanup() # clean up GPIO on CTRL+C exit
-    root.quit()
+    root.destroy()
+
 
 def record_loop():
     # recording status, check for errors
@@ -184,7 +184,8 @@ try:
     #main loop
     # last check for sensor intervals
     while True:
-        
+        if tog[0]:
+            camera.wait_recording()
         # annotate
         annotate()
         # tkinter loop
