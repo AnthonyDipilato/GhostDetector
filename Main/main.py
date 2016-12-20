@@ -100,10 +100,13 @@ def toggleRecord(tog=[False]):
         recordButton.config(text="Record")
 # quit application
 def quit():
+    print("quit")
     if top[0]:
         camera.stop_recording()
     camera.stop_preview()
     camera.close()
+    pa.terminate()     
+    GPIO.cleanup() # clean up GPIO on CTRL+C exit
     root.destroy()
 
 def record_loop():
@@ -196,6 +199,7 @@ except KeyboardInterrupt:
     camera.close()
     pa.terminate()     
     GPIO.cleanup() # clean up GPIO on CTRL+C exit
+    root.destroy()
 except:
     camera.stop_preview()
     camera.close()
@@ -203,6 +207,7 @@ except:
     GPIO.cleanup() # clean up GPIO on normal exit
     print "Unexpected error:", sys.exc_info()[0]
     raise
+    root.destroy()
     
 
 
