@@ -117,6 +117,7 @@ def record_loop():
     global audio_frames
     # recording status, check for errors
     # tog = 0 recording
+    print("record loop")
     if tog[0]:
         print("chunk")
         camera.wait_recording()
