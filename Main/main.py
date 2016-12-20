@@ -105,7 +105,7 @@ def quit():
         camera.stop_recording()
     camera.stop_preview()
     camera.close()
-    pa.terminate()     
+    p.terminate()     
     GPIO.cleanup() # clean up GPIO on CTRL+C exit
     root.destroy()
 
@@ -199,13 +199,13 @@ try:
 except KeyboardInterrupt:
     camera.stop_preview()
     camera.close()
-    pa.terminate()     
+    p.terminate()     
     GPIO.cleanup() # clean up GPIO on CTRL+C exit
     root.destroy()
 except:
     camera.stop_preview()
     camera.close()
-    pa.terminate()     
+    p.terminate()     
     GPIO.cleanup() # clean up GPIO on normal exit
     print "Unexpected error:", sys.exc_info()[0]
     raise
