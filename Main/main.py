@@ -115,6 +115,7 @@ def quit():
 
 def record_loop():
     global audio_frames
+    global tog[0]
     # recording status, check for errors
     # tog = 0 recording
     print("record loop")
