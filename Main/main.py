@@ -71,7 +71,7 @@ def toggleRecord(tog=[False]):
     tog[0] = not tog[0]
     # recording
     if tog[0]:
-        status = 1
+        status = True
         recordButton.config(text="Stop Recording") # update button label
         tempFilename = dt.datetime.now().strftime('/%Y-%m-%d-%H%M%S')
         tempVideo = tempDirectory + tempFilename + '.h264'
@@ -79,7 +79,7 @@ def toggleRecord(tog=[False]):
         camera.start_recording(tempVideo)
     # stop recording
     else:
-        status = 0
+        status = False
         # stop audio
         audio_stream.stop_stream()
         audio_stream.close()
@@ -100,7 +100,7 @@ def toggleRecord(tog=[False]):
         recordButton.config(text="Record")
 # quit application
 def quit():
-    if tog[0]:
+    if status:
         camera.stop_recording()
     camera.stop_preview()
     camera.close()
@@ -166,7 +166,7 @@ audio_stream = p.open(format=FORMAT,
                 frames_per_buffer=CHUNK)
 audio_frames = []
 # camera status
-status = 0
+status = False
 
 try:
     #main loop
