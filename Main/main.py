@@ -66,9 +66,10 @@ def deleteTempFiles(tempDirectory):
             print(e)
 
 # toggle record video
-def toggleRecord(tog=[False]):
+def toggleRecord():
     global tempFilename
     global audio_frames
+    global tog
     tog[0] = not tog[0]
     # recording
     if tog[0]:
@@ -113,7 +114,6 @@ def quit():
 
 def record_loop():
     global audio_frames
-    global tog
     # recording status, check for errors
     # tog = 0 recording
     print("record loop: {}".format(tog[0]))
