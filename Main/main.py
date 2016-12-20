@@ -155,7 +155,7 @@ camera.annotate_text_size = 20 # default 32
 # Audio settings
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
-CHANNELS = 2
+CHANNELS = 1
 RATE = 44100
 # initialize audio
 p = pyaudio.PyAudio()
