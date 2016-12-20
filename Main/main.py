@@ -106,11 +106,20 @@ def quit():
     camera.close()
     root.destroy()
 
-
+def record_loop():
+    # recording status, check for errors
+    # tog = 0 recording
+    if tog[0]:
+        camera.wait_recording()
+        # store audio chunk
+        data = audio_stream.read(CHUNK)
+        audio_frames.append(data)
+    root.after(record_interval, record_loop)
 
 # Settings
 # interval to check for sensor updates
 sensor_interval = 500 # milliseconds
+record_interval = 1000
 tog = [False]
 
 # initialize tkinter
@@ -165,8 +174,7 @@ audio_stream = p.open(format=FORMAT,
                 input=True,
                 frames_per_buffer=CHUNK)
 audio_frames = []
-# camera status
-status = False
+
 
 try:
     #main loop
@@ -175,15 +183,10 @@ try:
         
         # annotate
         annotate()
-        # recording status, check for errors
-        # tog = 0 recording
-        if status:
-            print("chunk")
-            camera.wait_recording()
-            # store audio chunk
-            data = audio_stream.read(CHUNK)
-            audio_frames.append(data)
         # tkinter loop
+        # tikinter handles loops a little different we will call functions on an interval
+        # that calls themselves again on the interval
+        root.after(record_interval, record_loop)
         root.after(sensor_interval, sensors_update)
         root.after(sensor_interval, annotate) # update every second for clock
         root.mainloop()
