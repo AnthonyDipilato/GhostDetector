@@ -71,6 +71,7 @@ def toggleRecord(tog=[False]):
     tog[0] = not tog[0]
     # recording
     if tog[0]:
+        status = 1
         recordButton.config(text="Stop Recording") # update button label
         tempFilename = dt.datetime.now().strftime('/%Y-%m-%d-%H%M%S')
         tempVideo = tempDirectory + tempFilename + '.h264'
@@ -78,6 +79,7 @@ def toggleRecord(tog=[False]):
         camera.start_recording(tempVideo)
     # stop recording
     else:
+        status = 0
         # stop audio
         audio_stream.stop_stream()
         audio_stream.close()
@@ -153,7 +155,7 @@ camera.annotate_text_size = 20 # default 32
 # Audio settings
 CHUNK = 1024
 FORMAT = pyaudio.paInt16
-CHANNELS = 1
+CHANNELS = 2
 RATE = 44100
 # initialize audio
 p = pyaudio.PyAudio()
@@ -163,6 +165,8 @@ audio_stream = p.open(format=FORMAT,
                 input=True,
                 frames_per_buffer=CHUNK)
 audio_frames = []
+# camera status
+status = 0
 
 try:
     #main loop
@@ -173,7 +177,8 @@ try:
         annotate()
         # recording status, check for errors
         # tog = 0 recording
-        if tog[0]:
+        if status:
+            print("chunk")
             camera.wait_recording()
             # store audio chunk
             data = audio_stream.read(CHUNK)
