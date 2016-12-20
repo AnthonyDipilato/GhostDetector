@@ -69,6 +69,7 @@ def deleteTempFiles(tempDirectory):
 def toggleRecord():
     global tempFilename
     global audio_frames
+    global audio_stream
     global tog
     tog[0] = not tog[0]
     # recording
