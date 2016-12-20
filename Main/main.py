@@ -100,6 +100,7 @@ def toggleRecord(tog=[False]):
         recordButton.config(text="Record")
 # quit application
 def quit():
+    global root
     print("quit")
     if top[0]:
         camera.stop_recording()
@@ -107,7 +108,7 @@ def quit():
     camera.close()
     pa.terminate()     
     GPIO.cleanup() # clean up GPIO on CTRL+C exit
-    root.destroy()
+    root.quit()
 
 def record_loop():
     # recording status, check for errors
@@ -189,7 +190,7 @@ try:
         # tkinter loop
         # tikinter handles loops a little different we will call functions on an interval
         # that calls themselves again on the interval
-        root.after(record_interval, record_loop)
+        #root.after(record_interval, record_loop)
         root.after(sensor_interval, sensors_update)
         root.after(sensor_interval, annotate) # update every second for clock
         root.mainloop()
