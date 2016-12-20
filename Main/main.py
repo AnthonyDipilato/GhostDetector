@@ -119,8 +119,6 @@ def record_loop():
     # tog = 0 recording
     print("record loop: {}".format(tog[0]))
     if tog[0]:
-        print("chunk")
-        camera.wait_recording()
         # store audio chunk
         data = audio_stream.read(CHUNK)
         audio_frames.append(data)
@@ -129,7 +127,6 @@ def record_loop():
 # Settings
 # interval to check for sensor updates
 sensor_interval = 500 # milliseconds
-record_interval = 1000
 tog = [0]
 
 # initialize tkinter
@@ -176,6 +173,8 @@ CHUNK = 1024
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 44100
+record_interval = 1000 / RATE / CHUNK
+
 # initialize audio
 p = pyaudio.PyAudio()
 audio_stream = p.open(format=FORMAT,
