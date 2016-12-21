@@ -86,15 +86,15 @@ class Record:
         
     # encodes and mux audio and video to mp4 in mediadirector
     def encodeVideo(self):
-        output = self.mediaDirectory + '/Videos/'+ self.tempFilename + '.mkv'
+        output = self.mediaDirectory + '/Videos/'+ self.tempFilename + '.mp4'
+        audio = self.tempDirectory + '/' + self.tempAudio
         print("Input: {}".format(self.tempVideo))
         print("Output: {}".format(output))
-        audio = self.tempDirectory + '/' + self.tempAudio
         # Combining/Merging of Audio/Video File into mkv
         #z = ['MP4Box', '-fps', '30', '-add', self.tempVideo, '-add', self.tempDirectory + '/' + self.tempAudio, output]
-        z = ["avconv", "-y", "-i", audio,  "-r", "30", "-i", self.tempVideo,  "-filter:a", "aresample=async=1", "-c:a", "flac", "-c:v", "copy", output]
+        z = "MP4Box -fps 30 -add {} -add {} {}".format(self.tempVideo, audio, output)
         subprocess.Popen(z,shell=True)
-    
+ 
     # close down camera
     def cleanup(self):
         self.camera.stop_preview()
