@@ -47,7 +47,10 @@ class Record:
         # Combining/Merging of Audio/Video File into mkv
         z = ['MP4Box', '-fps', '30', '-add', self.tempVideo, output]
         subprocess.Popen(z,shell=False)
-        
+    
+    def cleanup(self):
+        self.camera.stop_preview()
+        self.camera.close()
         
     # returns temp directory, creates it if needed
     def tempDir(self):

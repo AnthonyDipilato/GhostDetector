@@ -64,11 +64,11 @@ def toggleRecord():
 # quit application
 def quit():
     if tog[0]:
-        camera.stop_recording()
-    camera.stop_preview()
-    camera.close()
-    audio_stream.close()
-    p.terminate()     
+        #stop camera recording
+        record.cameraStop()
+        # encode and mux video
+        record.encodeVideo()
+    record.cleanup()
     GPIO.cleanup() # clean up GPIO on CTRL+C exit
     root.destroy()
 
@@ -146,18 +146,12 @@ try:
         root.after(sensor_interval, annotate) # update every second for clock
         root.mainloop()
         
-except KeyboardInterrupt:
-    camera.stop_preview()
-    camera.close()
-    audio_stream.close()
-    p.terminate()     
+except KeyboardInterrupt:  
+    record.cleanup()
     GPIO.cleanup() # clean up GPIO on CTRL+C exit
     root.destroy()
 except:
-    camera.stop_preview()
-    camera.close()
-    audio_stream.close()
-    p.terminate()     
+    record.cleanup()    
     GPIO.cleanup() # clean up GPIO on normal exit
     print "Unexpected error:", sys.exc_info()[0]
     raise
