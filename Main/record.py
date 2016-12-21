@@ -90,6 +90,7 @@ class Record:
         audio = self.tempDirectory + '/' + self.tempAudio
         print("Input: {}".format(self.tempVideo))
         print("Output: {}".format(output))
+        print("Audio: {}".format(audio))
         # Combining/Merging of Audio/Video File into mkv
         #z = ['MP4Box', '-fps', '30', '-add', self.tempVideo, '-add', self.tempDirectory + '/' + self.tempAudio, output]
         z = "MP4Box -fps 30 -add {} -add {} {}".format(self.tempVideo, audio, output)
