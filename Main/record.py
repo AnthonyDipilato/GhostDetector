@@ -43,7 +43,7 @@ class Record:
                                         stream_callback=self.pa_callback())
         self.audioStream.start_stream()
         
-    def audioEnd(self):
+    def audioStop(self):
         self.audioStatus = False
         self.audioStream.stop_stream()
         
