@@ -90,7 +90,7 @@ class Record:
         print("Input: {}".format(self.tempVideo))
         print("Output: {}".format(output))
         # Combining/Merging of Audio/Video File into mkv
-        z = ['MP4Box', '-fps', '30', '-add', self.tempVideo, '-add', self.tempAudio, output]
+        z = ['MP4Box', '-fps', '30', '-add', self.tempVideo, '-add', self.tempDirectory + '/' + self.tempAudio, output]
         subprocess.Popen(z,shell=False)
     
     # close down camera
