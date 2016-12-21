@@ -7,6 +7,8 @@ import sys
 import RPi.GPIO as GPIO
 import os
 import shutil
+# record wrapper
+from record import Record
 
 # sensors class
 from sensors import Sensors 
