@@ -96,7 +96,7 @@ class Record:
     def cleanup(self):
         self.camera.stop_preview()
         self.camera.close()
-        if streamSetup:
+        if self.streamSetup:
             self.audioStream.close()
         self.pa.terminate()
         self.wavefile.close()
