@@ -99,8 +99,10 @@ class Record:
         self.camera.close()
         if self.streamSetup:
             self.audioStream.close()
-        self.pa.terminate()
-        self.wavefile.close()
+            self.wavefile.close()
+            self.pa.terminate()
+        
+        
         
     # returns temp directory, creates it if needed
     def tempDir(self):
