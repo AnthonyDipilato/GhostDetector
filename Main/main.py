@@ -73,17 +73,6 @@ def quit():
     root.destroy()
 
 
-def record_loop():
-    global audio_frames
-    # recording status, check for errors
-    # tog = 0 recording
-    print("record loop: {}".format(tog[0]))
-    if tog[0]:
-        # store audio chunk
-        data = audio_stream.read(CHUNK)
-        audio_frames.append(data)
-    root.after(record_interval, record_loop)
-
 # Settings
 # interval to check for sensor updates
 sensor_interval = 500 # milliseconds
@@ -141,7 +130,6 @@ try:
         # tkinter loop
         # tikinter handles loops a little different we will call functions on an interval
         # that calls themselves again on the interval
-        root.after(record_interval, record_loop)
         root.after(sensor_interval, sensors_update)
         root.after(sensor_interval, annotate) # update every second for clock
         root.mainloop()
