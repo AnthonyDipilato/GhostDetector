@@ -43,7 +43,7 @@ class Record:
     def encodeVideo(self):
         output = self.mediaDirectory + '/Videos/'+ self.tempFilename + '.mp4'
         print("Input: {}".format(self.tempVideo))
-        print("Output: {}".format(outputFile))
+        print("Output: {}".format(output))
         # Combining/Merging of Audio/Video File into mkv
         z = ['MP4Box', '-fps', '30', '-add', self.tempVideo, output]
         subprocess.Popen(z,shell=False)
