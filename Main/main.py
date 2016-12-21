@@ -1,34 +1,20 @@
 #!/usr/bin/env python
 
-import picamera
 import datetime as dt
 import Tkinter as tk
 import time
 import sys
-import pyaudio
-import subprocess
 import RPi.GPIO as GPIO
 import os
 import shutil
-import pyaudio
-import wave
+
 # sensors class
 from sensors import Sensors 
 
-# returns temp directory, creates it if needed
-def tempDir():
-    # temp directory
-    dirname, filename = os.path.split(os.path.abspath(__file__)) # find current directory
-    tempDirectory = dirname + '/tmp'
-    print("Temp directory: {}".format(tempDirectory))
-    # check if temp directory exists and create it if not 
-    if not os.path.exists(tempDirectory):
-        os.makedirs(d)
-    return tempDirectory
-
+# add annotations to video
 def annotate():
     date_time = dt.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    camera.annotate_text = date_time + sensors.output()
+    record.cameraAnnotate(date_time + sensors.output())
     # call again
     root.after(sensor_interval, annotate) 
 
@@ -38,20 +24,9 @@ def sensors_update():
     # call again
     root.after(sensor_interval, sensors_update)
 
+   
 def screenshot():
-    ssFilename = dt.datetime.now().strftime('/Screenshots/%Y-%m-%d-%H%M%S.jpg')
-    camera.capture(mediaDirectory + ssFilename, use_video_port=True)
-
-def encodeVideo():
-    tempVideo = tempDirectory + tempFilename + '.h264'
-    tempAudio = tempDirectory + tempFilename + '.wav'
-    outputFile = mediaDirectory + '/Videos'+ tempFilename + '.mp4'
-    print("Input: {} {}".format(tempAudio,tempVideo))
-    print("Output: {}".format(outputFile))
-    
-    # Combining/Merging of Audio/Video File into mkv
-    z = ['MP4Box', '-fps', '30', '-add', tempVideo, outputFile]
-    subprocess.Popen(z,shell=False)
+    record.cameraScreenshot()
 
 
 def deleteTempFiles(tempDirectory):
@@ -67,39 +42,22 @@ def deleteTempFiles(tempDirectory):
 
 # toggle record video
 def toggleRecord():
-    global tempFilename
-    global audio_frames
-    global audio_stream
     global tog
     tog[0] = not tog[0]
     # recording
     if tog[0]:
-        recordButton.config(text="Stop Recording") # update button label
-        tempFilename = dt.datetime.now().strftime('/%Y-%m-%d-%H%M%S')
-        tempVideo = tempDirectory + tempFilename + '.h264'
-        print("Temp: {}".format(tempVideo))
-        camera.start_recording(tempVideo)
-        audio_stream.start_stream()
+        record.cameraRecord()
+        # update button label
+        recordButton.config(text="Stop Recording")
+        
     # stop recording
     else:
-        # stop audio
-        audio_stream.stop_stream()
-        p.terminate()
-        audioFile = tempDirectory + tempFilename + '.wav'
-        print("audio file: {}".format(audioFile))
-        wf = wave.open(audioFile, 'wb')
-        wf.setnchannels(CHANNELS)
-        wf.setsampwidth(p.get_sample_size(FORMAT))
-        wf.setframerate(RATE)
-        wf.writeframes(b''.join(audio_frames))
-        wf.close()
         #stop camera recording
-        camera.stop_recording()
+        record.cameraStop()
         # encode and mux video
-        encodeVideo()
-        # update button
+        record.encodeVideo()
+        # update button label
         recordButton.config(text="Record")
-        audio_frames = [] # clear frames
 
 # quit application
 def quit():
@@ -161,28 +119,13 @@ recordButton.grid(row=1, column=1, pady=10)
 tk.Button(root, text="Snapshot", command=screenshot).grid(row=1, column=2, pady=10)
 # Sensor Class
 sensors = Sensors()
-# setup camera
-camera = picamera.PiCamera()
-camera.vflip = True # camera is upside down
-camera.hflip = True 
-camera.start_preview(fullscreen=False, window = (offset_x, 0, preview_width, preview_height))# MENU
-camera.annotate_text_size = 20 # default 32
-
-# Audio settings
-CHUNK = 1024
-FORMAT = pyaudio.paInt16
-CHANNELS = 1
-RATE = 44100
-record_interval = 1000 / RATE / CHUNK
-
-# initialize audio
-p = pyaudio.PyAudio()
-audio_stream = p.open(format=FORMAT,
-                channels=CHANNELS,
-                rate=RATE,
-                input=True,
-                frames_per_buffer=CHUNK)
-audio_frames = []
+# Record class
+record = Record(mediaDirectory)
+# Setup Camera
+record.cameraSetup()
+# (fullscreen, offset_x, offset_y, preview_width, preview_height, annotate_size)
+record.cameraPreview(False, offset_x, 0, preview_width, preview_height, 20)
+# initial record state
 tog[0] = False
 
 try:
