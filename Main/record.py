@@ -92,7 +92,7 @@ class Record:
         audio = self.tempDirectory + '/' + self.tempAudio
         # Combining/Merging of Audio/Video File into mkv
         #z = ['MP4Box', '-fps', '30', '-add', self.tempVideo, '-add', self.tempDirectory + '/' + self.tempAudio, output]
-        z = ["ffmpeg", "-y", "-i", audio,  "-r", "30", "-i", self.tempVideo,  "-filter:a", "aresample=async=1", "-c:a", "flac", "-c:v", "copy", output]
+        z = ["avconv", "-y", "-i", audio,  "-r", "30", "-i", self.tempVideo,  "-filter:a", "aresample=async=1", "-c:a", "flac", "-c:v", "copy", output]
         subprocess.Popen(z,shell=True)
     
     # close down camera
