@@ -54,7 +54,7 @@ class Record:
         return callback
     
     def wave(self, mode='wb'):
-        self.wavefile = wave.open(self.tempAudio, mode)
+        self.wavefile = wave.open(self.tempDirectory + '/' + self.tempAudio, mode)
         self.wavefile.setnchannels(self.channels)
         self.wavefile.setsampwidth(self.pa.get_sample_size(pyaudio.paInt16))
         self.wavefile.setframerate(self.rate)
