@@ -46,6 +46,7 @@ class Record:
     def audioStop(self):
         self.audioStatus = False
         self.audioStream.stop_stream()
+        self.audioStream.close()
         
     def pa_callback(self):
         def callback(in_data, frame_count, time_info, status):
