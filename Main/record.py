@@ -24,7 +24,7 @@ class Record:
         self.cameraStatus = True
     
     # initial setup for audio
-    def audioSetup(self, channel, rate, chunk):
+    def audioSetup(self, channels, rate, chunk):
         self.channels = channels
         self.rate = rate
         self.chunk = chunk
