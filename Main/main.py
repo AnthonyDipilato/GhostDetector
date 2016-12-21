@@ -100,9 +100,7 @@ root.focus_set() # <-- move focus to this widget
 # location of the Flash Drive 
 mediaDirectory = '/media/pi/Media'
 
-tempDirectory = tempDir()
-# Delete temp files
-deleteTempFiles(tempDirectory)
+
 # widgets
 # preview area
 preview_height = h - 45
@@ -125,6 +123,8 @@ record = Record(mediaDirectory)
 record.cameraSetup()
 # (fullscreen, offset_x, offset_y, preview_width, preview_height, annotate_size)
 record.cameraPreview(False, offset_x, 0, preview_width, preview_height, 20)
+# Delete temp files
+deleteTempFiles(record.tempDirectory)
 # initial record state
 tog[0] = False
 
