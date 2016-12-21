@@ -49,6 +49,7 @@ def toggleRecord():
     # recording
     if tog[0]:
         record.cameraRecord()
+        record.audioStart()
         # update button label
         recordButton.config(text="Stop Recording")
         
@@ -56,6 +57,8 @@ def toggleRecord():
     else:
         #stop camera recording
         record.cameraStop()
+        # stop audio
+        record.audioStop()
         # encode and mux video
         record.encodeVideo()
         # update button label
@@ -66,6 +69,9 @@ def quit():
     if tog[0]:
         #stop camera recording
         record.cameraStop()
+        # stop audio
+        record.audioStop()
+        
         # encode and mux video
         record.encodeVideo()
     record.cleanup()
@@ -112,6 +118,10 @@ sensors = Sensors()
 record = Record(mediaDirectory)
 # Setup Camera
 record.cameraSetup()
+# Setup Audio (channel, rate, chunk)
+record.audioSetup(1, 44100, 1024)
+
+
 # (fullscreen, offset_x, offset_y, preview_width, preview_height, annotate_size)
 record.cameraPreview(False, offset_x, 0, preview_width, preview_height, 20)
 # Delete temp files
@@ -123,8 +133,6 @@ try:
     #main loop
     # last check for sensor intervals
     while True:
-        if tog[0]:
-            camera.wait_recording()
         # annotate
         annotate()
         # tkinter loop

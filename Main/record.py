@@ -12,6 +12,7 @@ class Record:
         self.tempDir()
         self.cameraStatus = False
         self.audioStatus = False
+        self.streamSetup = False
         self.recording = False
         self.mediaDirectory = mediaDirectory
         
@@ -30,8 +31,10 @@ class Record:
         self.pa = pyaudio.PyAudio()
         
     def audioStart(self):
+        self.audioStatus = True
         self.tempAudio = dt.datetime.now().strftime('%Y-%m-%d-%H%M%S.wav')
         self.wave()
+        self.streamSetup = True
         self.audioStream = self.pa.open(format=pyaudio.paInt16,
                                         channels=self.channels,
                                         rate=self.rate,
@@ -40,7 +43,8 @@ class Record:
                                         stream_callback=self.pa_callback())
         self.audioStream.start_stream()
         
-    def audioStart(self):
+    def audioEnd(self):
+        self.audioStatus = False
         self.audioStream.stop_stream()
         
     def pa_callback(self):
@@ -92,7 +96,8 @@ class Record:
     def cleanup(self):
         self.camera.stop_preview()
         self.camera.close()
-        self.audioStream.close()
+        if streamSetup:
+            self.audioStream.close()
         self.pa.terminate()
         self.wavefile.close()
         
