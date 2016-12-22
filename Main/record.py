@@ -113,7 +113,8 @@ class Record:
     def tempDir(self):
         # temp directory
         dirname, filename = os.path.split(os.path.abspath(__file__)) # find current directory
-        self.tempDirectory = dirname + '/tmp'
+        #self.tempDirectory = dirname + '/tmp'
+        mediaDirectory = '/media/pi/Media'
         print("Temp directory: {}".format(self.tempDirectory))
         # check if temp directory exists and create it if not 
         if not os.path.exists(self.tempDirectory):
