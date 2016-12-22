@@ -94,11 +94,10 @@ class Record:
         print("Output: {}".format(output))
         print("Audio: {}".format(audio))
         # Combining/Merging of Audio/Video File into mkv
-        #z = ['MP4Box', '-fps', '30', '-add', self.tempVideo, '-add', self.tempDirectory + '/' + self.tempAudio, output]
-        z = "MP4Box -fps 30 -add {} -add {} {}".format(self.tempVideo, audio, output)
+        z = "avconv -y -i {}  -r 30 -i {} -c:v copy -c:a aac -strict experimental {}"
+        #z = "MP4Box -fps 30 -add {} -add {} {}".format(audio, self.tempVideo, output)
         subprocess.Popen(z,shell=True)
-        #"MP4Box -fps 30 -add 2016-12-22-013622.h264 -add 2016-12-22-013622.wav test.mp4"
-  
+        
     # close down camera
     def cleanup(self):
         self.camera.stop_preview()
