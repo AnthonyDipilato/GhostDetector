@@ -17,7 +17,7 @@ class Record:
         self.mediaDirectory = mediaDirectory
         
     # initial setup for camera
-    def cameraSetup():
+    def cameraSetup(self):
         self.camera = picamera.PiCamera()
         self.camera.framerate = 32
         self.camera.vflip = True # camera is upside down
