@@ -119,7 +119,7 @@ record = Record(mediaDirectory)
 # Setup Camera
 record.cameraSetup()
 # Setup Audio (channel, rate, chunk)
-record.audioSetup(1, 44100, 1024)
+record.audioSetup(1, 44100, 8192)
 
 
 # (fullscreen, offset_x, offset_y, preview_width, preview_height, annotate_size)

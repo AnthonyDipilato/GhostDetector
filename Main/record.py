@@ -36,7 +36,7 @@ class Record:
         self.tempAudio = dt.datetime.now().strftime('%Y-%m-%d-%H%M%S.wav')
         self.wave()
         self.streamSetup = True
-        self.audioStream = self.pa.open(format=pyaudio.paFloat32,
+        self.audioStream = self.pa.open(format=pyaudio.paInt16,
                                         channels=self.channels,
                                         rate=self.rate,
                                         input=True,
