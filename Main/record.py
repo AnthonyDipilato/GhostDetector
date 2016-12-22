@@ -17,7 +17,7 @@ class Record:
         self.mediaDirectory = mediaDirectory
         
     # initial setup for camera
-    def cameraSetup()
+    def cameraSetup():
         self.camera.vflip = True # camtup(self):
         self.camera = picamera.PiCamera()
         self.camera.framerate = 32
