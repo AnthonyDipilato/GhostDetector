@@ -46,8 +46,9 @@ class Record:
     def audioStop(self):
         self.audioStatus = False
         self.audioStream.stop_stream()
-        self.audioStream.close()
         self.wavefile.close()
+        self.audioStream.close()
+        
         
     def pa_callback(self):
         def callback(in_data, frame_count, time_info, status):
@@ -96,7 +97,7 @@ class Record:
         #z = ['MP4Box', '-fps', '30', '-add', self.tempVideo, '-add', self.tempDirectory + '/' + self.tempAudio, output]
         z = "MP4Box -fps 30 -add {} -add {} {}".format(self.tempVideo, audio, output)
         subprocess.Popen(z,shell=True)
- 
+        #"MP4Box -fps 30 -add 2016-12-22-012557.h264 -add 2016-12-22-012557.wav test.mp4"
  
     # close down camera
     def cleanup(self):
