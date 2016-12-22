@@ -36,7 +36,7 @@ class Record:
         self.tempAudio = dt.datetime.now().strftime('%Y-%m-%d-%H%M%S.wav')
         self.wave()
         self.streamSetup = True
-        self.audioStream = self.pa.open(format=pyaudio.paInt16,
+        self.audioStream = self.pa.open(format=pyaudio.paFloat32,
                                         channels=self.channels,
                                         rate=self.rate,
                                         input=True,
@@ -95,7 +95,7 @@ class Record:
         print("Output: {}".format(output))
         print("Audio: {}".format(audio))
         # Combining/Merging of Audio/Video File into mkv
-        z = "avconv -y -i {}  -r 25.375 -i {} -c:v copy -c:a aac -strict experimental {}".format(audio, self.tempVideo, output)
+        z = "avconv -y -i {}  -r 25 -i {} -c:v copy -c:a aac -strict experimental {}".format(audio, self.tempVideo, output)
         #z = "MP4Box -fps 30 -add {} -add {} {}".format(audio, self.tempVideo, output)
         subprocess.Popen(z,shell=True)
         
