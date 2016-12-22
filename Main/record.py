@@ -18,7 +18,6 @@ class Record:
         
     # initial setup for camera
     def cameraSetup():
-        self.camera.vflip = True # camtup(self):
         self.camera = picamera.PiCamera()
         self.camera.framerate = 32
         self.camera.vflip = True # camera is upside down
