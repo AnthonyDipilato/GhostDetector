@@ -17,8 +17,10 @@ class Record:
         self.mediaDirectory = mediaDirectory
         
     # initial setup for camera
-    def cameraSetup(self):
+    def cameraSe()
+        self.camera.vflip = True # camtup(self):
         self.camera = picamera.PiCamera()
+        self.camera.framerate = 32
         self.camera.vflip = True # camera is upside down
         self.camera.hflip = True 
         self.cameraStatus = True
@@ -94,7 +96,7 @@ class Record:
         print("Output: {}".format(output))
         print("Audio: {}".format(audio))
         # Combining/Merging of Audio/Video File into mkv
-        z = "avconv -y -i {}  -r 30 -i {} -c:v copy -c:a aac -strict experimental {}".format(audio, self.tempVideo, output)
+        z = "avconv -y -i {}  -r 32 -i {} -c:v copy -c:a aac -strict experimental {}".format(audio, self.tempVideo, output)
         #z = "MP4Box -fps 30 -add {} -add {} {}".format(audio, self.tempVideo, output)
         subprocess.Popen(z,shell=True)
         
