@@ -98,7 +98,7 @@ class Record:
         z = "MP4Box -fps 30 -add {} -add {} {}".format(self.tempVideo, audio, output)
         subprocess.Popen(z,shell=True)
         #"MP4Box -fps 30 -add 2016-12-22-012557.h264 -add 2016-12-22-012557.wav test.mp4"
- 
+  
     # close down camera
     def cleanup(self):
         self.camera.stop_preview()
