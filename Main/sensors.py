@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import time
 # sensor libraries
 import Adafruit_BMP.BMP085 as BMP085
 from compass import hmc5883l
@@ -24,8 +25,9 @@ class Sensors:
         self.emfL = 0
         self.emfR = 0
         self.counter = 0
-        self.counterMinute = datetime.now().minute
         self.counterSeconds = 0
+        self.counterReset = 20 # interval to reset timer
+        self.counterResetTime = time()
         # GPIO callback for geiger counter int. 
         GPIO.add_event_detect(12, GPIO.FALLING, callback=self.tube_impulse_callback) 
         
@@ -33,11 +35,12 @@ class Sensors:
         self.counter+=1
         self.counterSeconds = datetime.now().second
         if self.counterSeconds != 0:
-            self.geigerCpm = self.counter * (60 / self.counterSeconds)
+            self.geigerCpm = (self.counter / self.counterSeconds) * 60 # estimated clicks per minute
         
         
     def update_all(self):
-        # Every minute we will reset geiger counter
+        # Counter reset
+        if datetime.now().second
         if datetime.now().minute != self.counterMinute:
             self.counterMinute = datetime.now().minute
             self.counterSeconds = 0

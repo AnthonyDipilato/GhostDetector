@@ -9,12 +9,12 @@ import subprocess
 
 class Record:
     def __init__(self, mediaDirectory):
-        self.tempDir()
         self.cameraStatus = False
         self.audioStatus = False
         self.streamSetup = False
         self.recording = False
         self.mediaDirectory = mediaDirectory
+        self.tempDirectory = mediaDirectory + '/Temp'
         
     # initial setup for camera
     def cameraSetup(self):
@@ -110,16 +110,7 @@ class Record:
         
         
         
-    # returns temp directory, creates it if needed
-    def tempDir(self):
-        # temp directory
-        dirname, filename = os.path.split(os.path.abspath(__file__)) # find current directory
-        #self.tempDirectory = dirname + '/tmp'
-        self.tempDirectory = '/media/pi/Media'
-        print("Temp directory: {}".format(self.tempDirectory))
-        # check if temp directory exists and create it if not 
-        if not os.path.exists(self.tempDirectory):
-            os.makedirs(self.tempDirectory)
+
             
 
    
