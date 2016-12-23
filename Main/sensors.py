@@ -26,6 +26,7 @@ class Sensors:
         self.emfR = 0
         self.counter = 0
         self.counterSeconds = 0
+        self.counterMinute = 0
         self.counterReset = 20 # interval to reset timer
         self.counterResetTime = time()
         # GPIO callback for geiger counter int. 
@@ -40,7 +41,6 @@ class Sensors:
         
     def update_all(self):
         # Counter reset
-        if datetime.now().second
         if datetime.now().minute != self.counterMinute:
             self.counterMinute = datetime.now().minute
             self.counterSeconds = 0
