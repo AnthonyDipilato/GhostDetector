@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import datetime as dt
 import Tkinter as tk
 import time
@@ -125,7 +124,7 @@ record.audioSetup(1, 44100, 8192)
 # (fullscreen, offset_x, offset_y, preview_width, preview_height, annotate_size)
 record.cameraPreview(False, offset_x, 0, preview_width, preview_height, 20)
 # Delete temp files
-deleteTempFiles(record.tempDirectory)
+deleteTempFiles(mediaDirectory+ '/Temp')
 # initial record state
 tog[0] = False
 
