@@ -41,6 +41,16 @@ def deleteTempFiles(tempDirectory):
         except Exception as e:
             print(e)
 
+def findNewestDir(directory):
+    os.chdir(directory)
+    dirs = {}
+    for dir in glob.glob('*'):
+        if os.path.isdir(dir):
+            dirs[dir] = os.path.getctime(dir)
+
+    lister = sorted(dirs.iteritems(), key=operator.itemgetter(1))
+    return lister[-1][0]
+
 # toggle record video
 def toggleRecord():
     global tog
@@ -94,7 +104,8 @@ root.focus_set() # <-- move focus to this widget
 
 # used for final encoded output
 # location of the Flash Drive 
-mediaDirectory = '/media/pi/Media'
+newDir = findNewestDir(directory)
+mediaDirectory = '/media/pi/' + newDir
 
 
 # widgets
