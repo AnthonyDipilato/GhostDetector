@@ -19,7 +19,7 @@ class Sensors:
         self.emf = EMF()
         self.pressure = 0.00
         self.temperature = 0.00
-        self.altitude = 0.00
+        self.altitude = 0.00 
         self.direction = "N  "
         self.geigerCpm = 0
         self.emfL = 0
