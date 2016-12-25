@@ -94,7 +94,7 @@ root.focus_set() # <-- move focus to this widget
 
 # used for final encoded output
 # location of the Flash Drive 
-mediaDirectory = '/media/pi/Media1'
+mediaDirectory = '/media/pi/Media'
 
 
 # widgets
