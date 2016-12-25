@@ -124,7 +124,7 @@ record.audioSetup(1, 44100, 8192)
 # (fullscreen, offset_x, offset_y, preview_width, preview_height, annotate_size)
 record.cameraPreview(False, offset_x, 0, preview_width, preview_height, 20)
 # Delete temp files
-deleteTempFiles(mediaDirectory+ '/Temp')
+#deleteTempFiles(mediaDirectory+ '/Temp')
 # initial record state
 tog[0] = False
 
