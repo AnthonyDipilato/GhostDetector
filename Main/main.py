@@ -111,7 +111,7 @@ tk.Button(root, text="Quit", command=quit).grid(row=1, column=0, pady=10)
 recordButton = tk.Button(root, text="Record", command=toggleRecord)
 recordButton.grid(row=1, column=1, pady=10)
 tk.Button(root, text="Snapshot", command=screenshot).grid(row=1, column=2, pady=10)
-# Sensor Class
+# Sensor Class 
 sensors = Sensors()
 # Record class
 record = Record(mediaDirectory)
