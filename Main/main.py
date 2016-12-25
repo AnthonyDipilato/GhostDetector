@@ -104,7 +104,7 @@ root.focus_set() # <-- move focus to this widget
 
 # used for final encoded output
 # location of the Flash Drive 
-newDir = findNewestDir(directory)
+newDir = findNewestDir('/media/pi/')
 mediaDirectory = '/media/pi/' + newDir
 
 
