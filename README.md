@@ -2,6 +2,8 @@ Ghost Detector
 
 This project is the code for my DIY ghost detector. It runs on a Raspberry Pi using the NOIR camera to record video and take pictures with overlaid sensor data.
 
+You can see the full build on my blog: <http://anthonydipilato.com/2016/12/31/ghost-detector/>
+
 Sensors Include:
 - BMP180 for barometric pressure and temperature
 - HMC5883L magnometer
@@ -10,7 +12,6 @@ Sensors Include:
 
 Videos and pictures are saved to a USB flash drive
 
-Full build details can be found at [url]
 
 Raspberry Pi python code is in the Main directory Arduino EMF sensor code in the EMF directory.
 
