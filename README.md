@@ -1,4 +1,5 @@
 # Ghost Detector
+![Ghost Detector](http://anthonydipilato.com/wp-content/uploads/2018/03/ghostdetector.jpg)
 
 This project is the code for my DIY ghost detector. It runs on a Raspberry Pi using the NOIR camera to record video and take pictures with overlaid sensor data.
 
