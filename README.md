@@ -3,7 +3,7 @@
 
 This project is the code for my DIY ghost detector. It runs on a Raspberry Pi using the NOIR camera to record video and take pictures with overlaid sensor data.
 
-You can see the full build on my blog: <ghostdetector.jpg>
+You can see the full build on my blog: <ghost_detector.jpg>
 
 ### Features
 - BMP180 for barometric pressure and temperature
