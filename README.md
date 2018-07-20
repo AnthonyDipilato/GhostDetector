@@ -3,7 +3,7 @@
 
 This project is the code for my DIY ghost detector. It runs on a Raspberry Pi using the NOIR camera to record video and take pictures with overlaid sensor data.
 
-You can see the full build on my blog: <ghost_detector.jpg>
+You can see the full build on my blog: [http://anthonydipilato.com/2016/12/31/ghost-detector/](http://anthonydipilato.com/2016/12/31/ghost-detector/)
 
 ### Features
 - BMP180 for barometric pressure and temperature
@@ -16,7 +16,7 @@ Videos and pictures are saved to a USB flash drive
 
 Raspberry Pi python code is in the Main directory Arduino EMF sensor code in the EMF directory.
 
-UI is built on Tkinter library 
+UI is built on Tkinter library
 
 ### Required libraries
 - [picamera](https://github.com/waveform80/picamera) - Python interface for RasPi camera.
